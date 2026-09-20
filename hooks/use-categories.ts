@@ -3,6 +3,7 @@ import {
   createCategory,
   deleteCategory,
   fetchCategories,
+  updateCategory,
 } from "@/lib/api/categories";
 
 export function useCategories() {
@@ -26,6 +27,23 @@ export function useDeleteCategory() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+    },
+  });
+}
+
+export function useUpdateCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      id,
+      ...input
+    }: {
+      id: string;
+      name?: string;
+      color?: string;
+    }) => updateCategory(id, input),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },

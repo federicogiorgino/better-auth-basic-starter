@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { CategoryDeleteDialog } from "@/components/category-delete-modal";
+import { CategoryModal } from "@/components/category-modal";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
@@ -42,6 +44,9 @@ export default function RootLayout({
       <body>
         <Providers>
           {children}
+          <CategoryModal />
+          <CategoryDeleteDialog />
+
           <Toaster />
         </Providers>
       </body>

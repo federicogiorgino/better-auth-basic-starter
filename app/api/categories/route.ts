@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/drizzle/db";
-import { categories } from "@/drizzle/schema";
+import { accomplishments, categories } from "@/drizzle/schema";
 import { auth } from "@/lib/auth";
 import { createCategorySchema } from "@/schemas/category";
 
@@ -14,9 +14,19 @@ export async function GET() {
   }
 
   const data = await db
-    .select()
+    .select({
+      id: categories.id,
+      userId: categories.userId,
+      name: categories.name,
+      color: categories.color,
+      createdAt: categories.createdAt,
+      updatedAt: categories.updatedAt,
+      accomplishmentCount: count(accomplishments.id),
+    })
     .from(categories)
-    .where(eq(categories.userId, session.user.id));
+    .leftJoin(accomplishments, eq(accomplishments.categoryId, categories.id))
+    .where(eq(categories.userId, session.user.id))
+    .groupBy(categories.id);
 
   return NextResponse.json(data);
 }
