@@ -36,7 +36,7 @@ export function CategoryRow({ category }: { category: Category }) {
         <button
           type="button"
           onClick={() => openEdit(category)}
-          aria-label={`Edit ${name}`}
+          aria-label={`Edit ${category.name}`}
           className="flex h-8 w-8 items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
         >
           <Pencil className="h-3.5 w-3.5" />
