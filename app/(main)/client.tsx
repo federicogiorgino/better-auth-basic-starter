@@ -1,19 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
+import { useCategories } from "@/hooks/use-categories";
 
 export function HomePageClient() {
-  const router = useRouter();
+  const { data } = useCategories();
   return (
-    <Button
-      onClick={() => {
-        authClient.signOut(undefined, {
-          onSuccess: () => router.refresh(),
-        });
-      }}
-    >
-      Logout
-    </Button>
+    <div>
+      {data?.map((category) => (
+        <h1 key={category.id}>{category.name}</h1>
+      ))}
+    </div>
   );
 }
