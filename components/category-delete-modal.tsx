@@ -41,7 +41,9 @@ export function CategoryDeleteDialog() {
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete category?</AlertDialogTitle>
+          <AlertDialogTitle className="text-lg font-semibold mb-3">
+            Delete category?
+          </AlertDialogTitle>
           <AlertDialogDescription>
             This will permanently delete{" "}
             <span className="font-medium text-foreground">

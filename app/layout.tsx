@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, PT_Serif } from "next/font/google";
 import "./globals.css";
 import { CategoryDeleteDialog } from "@/components/category-delete-modal";
 import { CategoryModal } from "@/components/category-modal";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+
+const ptSerifHeading = PT_Serif({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-heading",
+});
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,15 +46,18 @@ export default function RootLayout({
         geistMono.variable,
         "font-sans",
         inter.variable,
+        ptSerifHeading.variable,
       )}
     >
       <body>
         <Providers>
-          {children}
-          <CategoryModal />
-          <CategoryDeleteDialog />
+          <TooltipProvider>
+            {children}
+            <CategoryModal />
+            <CategoryDeleteDialog />
 
-          <Toaster />
+            <Toaster />
+          </TooltipProvider>
         </Providers>
       </body>
     </html>

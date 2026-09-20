@@ -14,9 +14,9 @@ export function CategoryModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && close()}>
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-lg font-semibold">
             {editingCategory ? "Edit category" : "New category"}
           </DialogTitle>
         </DialogHeader>

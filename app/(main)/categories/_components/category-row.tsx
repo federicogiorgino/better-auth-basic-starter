@@ -1,8 +1,8 @@
 "use client";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useCategoryModalStore } from "@/store/categories-modal-store";
 import type { Category } from "@/types/category";
-
 export function CategoryRow({ category }: { category: Category }) {
   const { openEdit, openDelete } = useCategoryModalStore();
 
@@ -60,6 +60,25 @@ export function CategoryRow({ category }: { category: Category }) {
       >
         <MoreHorizontal className="h-4 w-4" />
       </button>
+    </div>
+  );
+}
+
+export function CategoryRowSkeleton() {
+  return (
+    <div className="flex items-center gap-4 border-b border-stone-200/80 py-4">
+      <Skeleton className="h-2.5 w-2.5 shrink-0 rounded-full" />
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-col items-baseline gap-2">
+          <Skeleton className="h-3.5 w-[50%] rounded-full" />
+          <Skeleton className="h-3.5 w-[30%] rounded-full" />
+        </div>
+      </div>
+
+      <div className="flex items-center gap-1 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100 cursor-pointer">
+        <Skeleton className="h-3.5 w-15 rounded-full" />
+        <Skeleton className="h-3.5 w-15 rounded-full" />
+      </div>
     </div>
   );
 }

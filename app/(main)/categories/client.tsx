@@ -1,24 +1,25 @@
 "use client";
 
+import { Plus } from "lucide-react";
+import { PageHeading } from "@/components/page-heading";
 import { Button } from "@/components/ui/button";
-import { useCategories } from "@/hooks/use-categories";
 import { useCategoryModalStore } from "@/store/categories-modal-store";
-import { CategoryRow } from "./_components/category-row";
+import { CategoriesList } from "./_components/categories-list";
 
 export function CategoriesPageClient() {
-  const { data } = useCategories();
   const { openCreate } = useCategoryModalStore();
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between">
-        <h1>Your Categories</h1>
-        <Button onClick={openCreate}>+ Create Category</Button>
-      </div>
-      <div className="flex flex-col gap-2">
-        {data?.map((category) => (
-          <CategoryRow category={category} key={category.id} />
-        ))}
-      </div>
+    <div className="flex flex-col gap-4">
+      <PageHeading
+        eyebrow="Make it yours"
+        title="Your Categories"
+        subtitle="Manage your categories"
+        onMenu={() => {}}
+      />
+      <CategoriesList />
+      <Button variant="outline" onClick={openCreate} className="self-start">
+        <Plus size={16} /> New category
+      </Button>
     </div>
   );
 }
