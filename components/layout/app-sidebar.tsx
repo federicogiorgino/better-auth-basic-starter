@@ -1,6 +1,6 @@
 "use client";
 
-import { NotebookPen, Plus, Settings, SlidersHorizontal } from "lucide-react";
+import { NotebookPen, Settings, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -19,6 +19,7 @@ import {
 import { NAVIGATION_MAIN_LINKS } from "@/constants/navigation";
 import { cn } from "@/lib/utils";
 import type { Category } from "@/types/category";
+import AccomplishmentButton from "../accomplishment-button";
 
 type AppSidebarProps = {
   categories: Category[];
@@ -69,17 +70,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
         </Link>
 
         {/* Add button */}
-        <Link
-          href="/journal?new=1"
-          onClick={handleNavigate}
-          className="mt-[26px] mb-[9px] flex w-full items-center justify-center gap-2 rounded-[6px] bg-primary px-[9px] py-[11px] text-xs text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          <Plus size={17} />
-          Add accomplishment
-          <kbd className="ml-auto text-[10px] text-primary-foreground/60">
-            N
-          </kbd>
-        </Link>
+        <AccomplishmentButton />
       </SidebarHeader>
 
       <SidebarContent className="px-2">

@@ -12,10 +12,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useDeleteCategory } from "@/hooks/use-categories";
-import { useCategoryModalStore } from "@/store/categories-modal-store";
+import { useCategoryPanelStore } from "@/store/categories-panel-store";
 
 export function CategoryDeleteDialog() {
-  const { deletingCategory, closeDelete } = useCategoryModalStore();
+  const { deletingCategory, closeDelete } = useCategoryPanelStore();
   const deleteCategory = useDeleteCategory();
 
   function handleConfirm() {
@@ -41,7 +41,7 @@ export function CategoryDeleteDialog() {
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-lg font-semibold mb-3">
+          <AlertDialogTitle className="text-md uppercase font-sans font-semibold mb-3">
             Delete category?
           </AlertDialogTitle>
           <AlertDialogDescription>

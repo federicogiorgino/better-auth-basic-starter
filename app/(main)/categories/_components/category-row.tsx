@@ -1,21 +1,17 @@
 "use client";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { CategoryDot } from "@/components/category-dot";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCategoryModalStore } from "@/store/categories-modal-store";
+import { useCategoryPanelStore } from "@/store/categories-panel-store";
 import type { Category } from "@/types/category";
+
 export function CategoryRow({ category }: { category: Category }) {
-  const { openEdit, openDelete } = useCategoryModalStore();
+  const { openEdit, openDelete } = useCategoryPanelStore();
 
   return (
     <div className="group flex items-center gap-4 border-b border-stone-200/80 py-4">
-      {/* Color indicator */}
-      <span
-        className="h-2.5 w-2.5 shrink-0 rounded-full"
-        style={{ backgroundColor: category.color }}
-        aria-hidden="true"
-      />
+      <CategoryDot color={category.color} />
 
-      {/* Category name */}
       <div className="min-w-0 flex-1">
         <div className="flex flex-col items-baseline gap-2">
           <span className="truncate text-[15px] font-medium font-mono tracking-[-0.01em] text-stone-900">
@@ -35,7 +31,7 @@ export function CategoryRow({ category }: { category: Category }) {
       <div className="flex items-center gap-1 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100 cursor-pointer">
         <button
           type="button"
-          onClick={() => openEdit(category)}
+          onClick={() => openEdit(category, "drawer")}
           aria-label={`Edit ${category.name}`}
           className="flex h-8 w-8 items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
         >

@@ -29,9 +29,5 @@ export async function getUserCategories(): Promise<Category[]> {
     .groupBy(categories.id);
 
   // Convert Date objects to strings to match Category type
-  return data.map((row) => ({
-    ...row,
-    createdAt: row.createdAt.toISOString(),
-    updatedAt: row.updatedAt.toISOString(),
-  }));
+  return data;
 }

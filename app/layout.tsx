@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, PT_Serif } from "next/font/google";
 import "./globals.css";
+import { AccomplishmentPanel } from "@/components/accomplishment-panel";
 import { CategoryDeleteDialog } from "@/components/category-delete-modal";
-import { CategoryModal } from "@/components/category-modal";
+import { CategoryPanel } from "@/components/category-panel";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -53,7 +54,8 @@ export default function RootLayout({
         <Providers>
           <TooltipProvider>
             {children}
-            <CategoryModal />
+            <CategoryPanel />
+            <AccomplishmentPanel />
             <CategoryDeleteDialog />
 
             <Toaster />
