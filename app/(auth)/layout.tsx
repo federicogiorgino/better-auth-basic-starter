@@ -1,4 +1,5 @@
 import { GalleryVerticalEnd } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Layout({
@@ -22,10 +23,12 @@ export default function Layout({
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
-        <img
+        <Image
           src="/auth-bg.jpg"
           alt="work"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          fill
+          sizes="50vw"
+          className="object-cover dark:brightness-25 dark:grayscale"
         />
       </div>
     </div>

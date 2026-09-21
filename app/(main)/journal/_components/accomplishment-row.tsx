@@ -12,8 +12,7 @@ type AccomplishmentRowProps = {
   showDate?: boolean;
 };
 
-const serifHeadingClass =
-  "m-0 mb-3 font-[family-name:var(--serif)] text-[18px] font-normal tracking-[-0.02em]";
+const serifHeadingClass = "m-0 font-serif text-lg tracking-tight";
 
 export function AccomplishmentRow({
   accomplishment,
@@ -25,14 +24,14 @@ export function AccomplishmentRow({
     <button
       type="button"
       className={cn(
-        "group relative flex w-full items-center gap-[22px] border-0 border-b bg-transparent py-[19px] pr-3 pl-[18px] text-left transition-[background] duration-200 hover:bg-[#f0eee8] max-[800px]:gap-2.5 max-[800px]:pr-1",
+        "group relative flex w-full items-center gap-5 border-0 border-b bg-transparent py-5 pr-3 pl-4 text-left transition-colors duration-200 hover:bg-muted max-md:gap-2.5 max-md:pr-1",
         compact && "py-3",
       )}
       onClick={onSelect}
     >
       <span
         className={cn(
-          "absolute top-[19px] bottom-[19px] left-0 w-[3px] rounded-[3px]",
+          "absolute top-5 bottom-5 left-0 w-1 rounded-sm",
           compact && "top-3 bottom-3",
         )}
         style={{
@@ -43,11 +42,11 @@ export function AccomplishmentRow({
       <div className="min-w-0 flex-1">
         <div
           className={cn(
-            "mb-[7px] flex items-center gap-[15px] text-[10px] text-[#a09c93]",
+            "mb-2 flex items-center gap-4 text-xs text-muted-foreground",
             compact && "mb-0",
           )}
         >
-          <span className="inline-flex items-center gap-1.5 text-[#706c64]">
+          <span className="inline-flex items-center gap-1.5">
             <CategoryDot color={accomplishment.category.color} />
             {accomplishment.category.name}
           </span>
@@ -55,12 +54,12 @@ export function AccomplishmentRow({
           {!compact && showDate && <span>{accomplishment.date}</span>}
         </div>
 
-        <h3 className={cn(serifHeadingClass, compact && "mb-0 text-[14px]")}>
+        <h3 className={cn(serifHeadingClass, compact && "mb-0 text-sm")}>
           {accomplishment.title}
         </h3>
 
         {!compact && (
-          <p className="m-0 text-xs leading-[1.55] text-[#77736b] max-[800px]:line-clamp-2">
+          <p className="m-0 text-xs leading-6 text-muted-foreground max-md:line-clamp-2">
             {accomplishment.impact ?? accomplishment.notes ?? ""}
           </p>
         )}
@@ -68,7 +67,7 @@ export function AccomplishmentRow({
 
       <time
         className={cn(
-          "self-end text-[11px] text-[#9d988e] max-[800px]:mt-[30px] max-[800px]:self-start",
+          "self-end text-xs text-muted-foreground max-md:mt-8 max-md:self-start",
           compact && "mt-0 ml-auto self-end",
         )}
       >
@@ -76,7 +75,7 @@ export function AccomplishmentRow({
       </time>
 
       <ArrowRight
-        className="text-[#aaa59a] opacity-0 transition-opacity duration-200 group-hover:opacity-100 max-[800px]:hidden"
+        className="text-muted-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 max-md:hidden"
         size={16}
       />
     </button>
@@ -91,24 +90,19 @@ export function AccomplishmentRowSkeleton({
   return (
     <div
       className={cn(
-        "relative flex w-full items-center gap-[22px] border-0 border-b py-[19px] pr-3 pl-[18px] max-[800px]:gap-2.5 max-[800px]:pr-1",
+        "relative flex w-full items-center gap-5 border-0 border-b py-5 pr-3 pl-4 max-md:gap-2.5 max-md:pr-1",
         compact && "py-3",
       )}
     >
       <span
         className={cn(
-          "absolute top-[19px] bottom-[19px] left-0 w-[3px] rounded-[3px] bg-[#eeece5]",
+          "absolute top-5 bottom-5 left-0 w-1 rounded-sm bg-muted",
           compact && "top-3 bottom-3",
         )}
       />
 
       <div className="min-w-0 flex-1">
-        <div
-          className={cn(
-            "mb-[7px] flex items-center gap-[15px]",
-            compact && "mb-0",
-          )}
-        >
+        <div className={cn("mb-2 flex items-center gap-4", compact && "mb-0")}>
           <span className="inline-flex items-center gap-1.5">
             <Skeleton className="h-2.5 w-2.5 rounded-full" />
             <Skeleton className="h-2.5 w-16" />
@@ -118,25 +112,22 @@ export function AccomplishmentRowSkeleton({
         </div>
 
         <Skeleton
-          className={cn(
-            "mb-3 h-[18px] w-3/5",
-            compact && "mb-0 h-[14px] w-2/5",
-          )}
+          className={cn("mb-3 h-4 w-3/5", compact && "mb-0 h-3.5 w-2/5")}
         />
 
         {!compact && (
           <div className="space-y-1.5">
-            <Skeleton className="h-3 w-full max-w-[420px]" />
-            <Skeleton className="h-3 w-2/5 max-w-[220px] max-[800px]:hidden" />
+            <Skeleton className="h-3 w-full max-w-md" />
+            <Skeleton className="h-3 w-2/5 max-w-56 max-md:hidden" />
           </div>
         )}
       </div>
 
       <Skeleton
-        className={cn("h-[11px] w-10 self-end", compact && "ml-auto self-end")}
+        className={cn("h-3 w-10 self-end", compact && "ml-auto self-end")}
       />
 
-      <div className="w-4 max-[800px]:hidden" />
+      <div className="w-4 max-md:hidden" />
     </div>
   );
 }

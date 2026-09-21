@@ -44,9 +44,9 @@ export function AppSidebar({ categories }: AppSidebarProps) {
         <Link
           href="/journal"
           onClick={handleNavigate}
-          className="flex items-center gap-[9px] px-2 text-[11px] font-bold tracking-[0.15em]"
+          className="flex items-center gap-2 px-2 text-xs font-bold tracking-widest"
         >
-          <span className="grid size-[27px] place-items-center rounded-[7px] bg-sidebar-primary tracking-normal text-sidebar-primary-foreground">
+          <span className="grid size-7 place-items-center rounded-md bg-sidebar-primary tracking-normal text-sidebar-primary-foreground">
             <NotebookPen size={16} />
           </span>
 
@@ -60,7 +60,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
       <SidebarContent className="px-2">
         {/* Main navigation */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] font-bold tracking-[0.16em] text-muted-foreground uppercase">
+          <SidebarGroupLabel className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
             Workspace
           </SidebarGroupLabel>
 
@@ -87,7 +87,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
 
         {/* Categories */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] font-bold tracking-[0.16em] text-muted-foreground uppercase">
+          <SidebarGroupLabel className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
             Your categories
           </SidebarGroupLabel>
 
@@ -102,7 +102,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
                     >
                       <CategoryDot color={category.color} />
                       {category.name}
-                      <span className="ml-auto text-[11px] text-muted-foreground">
+                      <span className="ml-auto text-xs text-muted-foreground">
                         {category.accomplishmentCount}
                       </span>
                     </Link>
@@ -135,7 +135,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
           </SidebarMenuItem>
         </SidebarMenu>
 
-        <span className="mt-[10px] block px-2 text-[10px] text-muted-foreground">
+        <span className="mt-2.5 block px-2 text-xs text-muted-foreground">
           September 2026 · v1.0
         </span>
       </SidebarFooter>

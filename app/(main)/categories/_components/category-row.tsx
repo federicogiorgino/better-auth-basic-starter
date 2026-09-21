@@ -15,11 +15,11 @@ export function CategoryRow({ category }: { category: Category }) {
 
       <div className="min-w-0 flex-1">
         <div className="flex flex-col items-baseline gap-2">
-          <span className="truncate text-[15px] font-medium font-mono tracking-[-0.01em] text-stone-900">
+          <span className="truncate font-mono font-medium text-foreground">
             {category.name}
           </span>
 
-          <span className="text-xs tabular-nums text-stone-400">
+          <span className="text-xs tabular-nums text-muted-foreground">
             {category.accomplishmentCount}{" "}
             {pluralize(category.accomplishmentCount, "accomplishment")}
           </span>
@@ -32,7 +32,7 @@ export function CategoryRow({ category }: { category: Category }) {
           type="button"
           onClick={() => openEdit(category, "drawer")}
           aria-label={`Edit ${category.name}`}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <Pencil className="h-3.5 w-3.5" />
         </button>
@@ -51,7 +51,7 @@ export function CategoryRow({ category }: { category: Category }) {
       <button
         type="button"
         aria-label={`More options for ${category.name}`}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 md:hidden"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:hidden"
       >
         <MoreHorizontal className="h-4 w-4" />
       </button>
@@ -65,8 +65,8 @@ export function CategoryRowSkeleton() {
       <Skeleton className="h-2.5 w-2.5 shrink-0 rounded-full" />
       <div className="min-w-0 flex-1">
         <div className="flex flex-col items-baseline gap-2">
-          <Skeleton className="h-3.5 w-[50%] rounded-full" />
-          <Skeleton className="h-3.5 w-[30%] rounded-full" />
+          <Skeleton className="h-3.5 w-1/2 rounded-full" />
+          <Skeleton className="h-3.5 w-1/3 rounded-full" />
         </div>
       </div>
 

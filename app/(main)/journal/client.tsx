@@ -108,13 +108,13 @@ export function JournalPageClient() {
         onMenu={() => {}}
       />
 
-      <div className="mt-[35px] flex gap-2.5 text-xs text-muted-foreground">
+      <div className="mt-9 flex gap-2.5 text-xs text-muted-foreground">
         <span>{formatMonthYear(new Date())}</span>
-        <span className="text-[#bbb6ab]">·</span>
+        <span className="text-muted-foreground/60">·</span>
         <span>
           {formatCountLabel(accomplishments.length, "accomplishment")}
         </span>
-        <span className="text-[#bbb6ab]">·</span>
+        <span className="text-muted-foreground/60">·</span>
         <span>
           {formatCountLabel(categories.length, "area", "areas")} of work
         </span>
@@ -155,7 +155,7 @@ export function JournalPageClient() {
 
         {accomplishmentGroups.map((group) => (
           <section key={group.date} className="border-b">
-            <h2 className="bg-background py-3 text-[11px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+            <h2 className="bg-background py-3 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
               {group.heading}
             </h2>
 

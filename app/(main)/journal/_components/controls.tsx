@@ -18,7 +18,7 @@ import { useCategories } from "@/hooks/use-categories";
 import type { AccomplishmentQuery } from "@/types/accomplishment";
 
 const filterButtonClass =
-  "h-8 w-[170px] rounded border bg-transparent text-[11px] text-[#706d66] max-[800px]:flex-1";
+  "h-8 w-44 rounded border bg-transparent text-xs text-muted-foreground max-md:flex-1";
 
 type ViewMode = "list" | "grid" | "compact";
 type SortValue =
@@ -49,8 +49,8 @@ export function Controls({
   const sortValue = `${sortBy}:${sortOrder}` as SortValue;
 
   return (
-    <div className="flex items-center gap-2 border-b pt-9.5 pb-4 max-[800px]:flex-wrap max-[800px]:pt-7">
-      <label className="flex max-w-65 flex-1 items-center gap-2 border-b border-[#cbc7bc] py-1.75 text-muted-foreground max-[800px]:max-w-none max-[800px]:basis-full">
+    <div className="flex items-center gap-2 border-b pt-9.5 pb-4 max-md:flex-wrap max-md:pt-7">
+      <label className="flex max-w-64 flex-1 items-center gap-2 border-b border-border py-2 text-muted-foreground max-md:max-w-none max-md:basis-full">
         <Search size={15} />
         <input
           className="w-full border-0 bg-transparent text-xs outline-none"
@@ -103,12 +103,12 @@ export function Controls({
         </SelectContent>
       </Select>
 
-      <div className="ml-auto flex items-center gap-0.5 rounded border bg-transparent p-[3px] text-[11px] text-[#706d66] max-[800px]:ml-auto">
+      <div className="ml-auto flex items-center gap-0.5 rounded border bg-transparent p-1 text-xs text-muted-foreground max-md:ml-auto">
         <button
           type="button"
           className={cn(
-            "grid place-items-center rounded-[3px] border-0 bg-transparent p-[6px_7px] text-[#9b978f]",
-            view === "list" && "bg-[#e7e5df] text-muted-foreground",
+            "grid place-items-center rounded-sm border-0 bg-transparent px-2 py-1.5 text-muted-foreground",
+            view === "list" && "bg-muted text-foreground",
           )}
           onClick={() => setView("list")}
           aria-label="List view"
@@ -118,8 +118,8 @@ export function Controls({
         <button
           type="button"
           className={cn(
-            "grid place-items-center rounded-[3px] border-0 bg-transparent p-[6px_7px] text-[#9b978f]",
-            view === "grid" && "bg-[#e7e5df] text-muted-foreground",
+            "grid place-items-center rounded-sm border-0 bg-transparent px-2 py-1.5 text-muted-foreground",
+            view === "grid" && "bg-muted text-foreground",
           )}
           onClick={() => setView("grid")}
           aria-label="Grid view"
@@ -129,8 +129,8 @@ export function Controls({
         <button
           type="button"
           className={cn(
-            "grid place-items-center rounded-[3px] border-0 bg-transparent p-[6px_7px] text-[#9b978f]",
-            view === "compact" && "bg-[#e7e5df] text-muted-foreground",
+            "grid place-items-center rounded-sm border-0 bg-transparent px-2 py-1.5 text-muted-foreground",
+            view === "compact" && "bg-muted text-foreground",
           )}
           onClick={() => setView("compact")}
           aria-label="Compact view"

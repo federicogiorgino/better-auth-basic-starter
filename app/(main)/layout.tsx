@@ -14,7 +14,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       <SidebarInset className="relative">
         <MobileHeader />
         <div className="min-w-0 flex-1">
-          <div className="mx-auto max-w-262.5 px-18 pt-17.5 pb-25 max-[800px]:px-5 max-[800px]:pt-8">
+          <div className="mx-auto max-w-7xl px-16 pt-18 pb-24 max-md:px-5 max-md:pt-8">
             {children}
           </div>
         </div>

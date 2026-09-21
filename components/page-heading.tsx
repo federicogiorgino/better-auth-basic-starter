@@ -12,7 +12,7 @@ export function PageHeading({
   onMenu: () => void;
 }) {
   return (
-    <header className="flex items-start max-[800px]:pt-13.5">
+    <header className="flex items-start max-md:pt-14">
       <button
         className="hidden"
         type="button"
@@ -22,10 +22,10 @@ export function PageHeading({
         <Menu size={20} />
       </button>
       <div>
-        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+        <p className="mb-3 text-xs font-bold uppercase tracking-widest text-muted-foreground">
           {eyebrow || "Your work"}
         </p>
-        <h1 className="m-0 mb-3 font-serif text-[clamp(40px,5vw,61px)] font-normal leading-none tracking-[-0.045em] max-[800px]:text-[45px]">
+        <h1 className="m-0 mb-3 font-serif text-6xl font-normal leading-none tracking-tight max-md:text-5xl">
           {title}
         </h1>
         <p className="m-0 font-serif text-base text-muted-foreground italic">
