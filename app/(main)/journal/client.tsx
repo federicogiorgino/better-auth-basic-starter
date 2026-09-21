@@ -1,159 +1,99 @@
 "use client";
 
-import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  parseAsInteger,
+  parseAsNumberLiteral,
+  parseAsString,
+  parseAsStringLiteral,
+  useQueryStates,
+} from "nuqs";
+import { useEffect, useMemo } from "react";
 import { PageHeading } from "@/components/page-heading";
-import type { AccomplishmentWithCategory } from "@/types/accomplishment";
-import AccomplishmentRow from "./_components/accomplishment-row";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAccomplishments } from "@/hooks/use-accomplishments";
+import { useCategories } from "@/hooks/use-categories";
+import { useAccomplishmentPanelStore } from "@/store/accomplishments-panel-store";
+import type { AccomplishmentQuery } from "@/types/accomplishment";
+import {
+  toAccomplishmentWithCategory,
+  toEditingAccomplishment,
+} from "@/utils/accomplishments";
+import { formatMonthYear } from "@/utils/date";
+import { parseNumber } from "@/utils/numbers";
+import {
+  getDisplayPageCount,
+  getPaginationRange,
+  getPreviousPage,
+  PAGE_SIZE_VALUES,
+} from "@/utils/pagination";
+import { formatCountLabel } from "@/utils/string";
+import {
+  AccomplishmentRow,
+  AccomplishmentRowSkeleton,
+} from "./_components/accomplishment-row";
 import { Controls } from "./_components/controls";
 
-export const accomplishments: AccomplishmentWithCategory[] = [
-  {
-    id: "1",
-    userId: "user-1",
-    categoryId: "projects",
-    title: "Automated weekly reporting",
-    date: "2026-09-21",
-    impact: "Saved the team around six hours each week.",
-    notes:
-      "Connected the existing exports and added a clean summary for the Monday stand-up.",
-    link: null,
-    createdAt: new Date("2026-09-21T09:42:00"),
-    updatedAt: new Date("2026-09-21T09:42:00"),
-    category: {
-      id: "projects",
-      name: "Projects",
-      color: "#7C6F64",
-    },
-  },
-  {
-    id: "2",
-    userId: "user-1",
-    categoryId: "meetings",
-    title: "Led project kickoff",
-    date: "2026-09-21",
-    impact: null,
-    notes:
-      "Aligned the team around a clear brief, milestones, and what success looks like.",
-    link: null,
-    createdAt: new Date("2026-09-21T11:15:00"),
-    updatedAt: new Date("2026-09-21T11:15:00"),
-    category: {
-      id: "meetings",
-      name: "Meetings",
-      color: "#8A8178",
-    },
-  },
-  {
-    id: "3",
-    userId: "user-1",
-    categoryId: "wins",
-    title: "Mentored a new teammate",
-    date: "2026-09-21",
-    impact: null,
-    notes:
-      "Practiced the story arc together and shared the presentation checklist.",
-    link: null,
-    createdAt: new Date("2026-09-21T14:15:00"),
-    updatedAt: new Date("2026-09-21T14:15:00"),
-    category: {
-      id: "wins",
-      name: "Wins",
-      color: "#6F7D68",
-    },
-  },
-  {
-    id: "4",
-    userId: "user-1",
-    categoryId: "projects",
-    title: "Improved onboarding flow",
-    date: "2026-09-18",
-    impact: "Reduced time-to-first-value for new accounts.",
-    notes: "Removed three confusing steps from the new customer journey.",
-    link: null,
-    createdAt: new Date("2026-09-18T16:20:00"),
-    updatedAt: new Date("2026-09-18T16:20:00"),
-    category: {
-      id: "projects",
-      name: "Projects",
-      color: "#7C6F64",
-    },
-  },
-  {
-    id: "5",
-    userId: "user-1",
-    categoryId: "learning",
-    title: "Completed accessibility training",
-    date: "2026-09-17",
-    impact: null,
-    notes:
-      "Finished the advanced accessibility module and documented the key takeaways.",
-    link: null,
-    createdAt: new Date("2026-09-17T10:08:00"),
-    updatedAt: new Date("2026-09-17T10:08:00"),
-    category: {
-      id: "learning",
-      name: "Learning",
-      color: "#f512a0",
-    },
-  },
-  {
-    id: "6",
-    userId: "user-1",
-    categoryId: "learning",
-    title: "Documented deployment process",
-    date: "2026-09-16",
-    impact: null,
-    notes: "Created a single, calm reference for shipping safely on Fridays.",
-    link: null,
-    createdAt: new Date("2026-09-16T15:40:00"),
-    updatedAt: new Date("2026-09-16T15:40:00"),
-    category: {
-      id: "learning",
-      name: "Learning",
-      color: "#7A7185",
-    },
-  },
-  {
-    id: "7",
-    userId: "user-1",
-    categoryId: "wins",
-    title: "Resolved recurring customer issue",
-    date: "2026-09-15",
-    impact: "The support thread has stayed quiet since.",
-    notes:
-      "Found the underlying cause and shipped a fix instead of another workaround.",
-    link: null,
-    createdAt: new Date("2026-09-15T13:05:00"),
-    updatedAt: new Date("2026-09-15T13:05:00"),
-    category: {
-      id: "wins",
-      name: "Wins",
-      color: "#6F7D68",
-    },
-  },
-  {
-    id: "8",
-    userId: "user-1",
-    categoryId: "projects",
-    title: "Prepared quarterly planning materials",
-    date: "2026-09-14",
-    impact: null,
-    notes:
-      "Turned a wide set of ideas into a focused plan the team can act on.",
-    link: null,
-    createdAt: new Date("2026-09-14T17:12:00"),
-    updatedAt: new Date("2026-09-14T17:12:00"),
-    category: {
-      id: "projects",
-      name: "Projects",
-      color: "#7C6F64",
-    },
-  },
-];
+const loadingRows = ["loading-1", "loading-2", "loading-3", "loading-4"];
+const sortByValues = ["date", "createdAt", "title"] as const;
+const sortOrderValues = ["asc", "desc"] as const;
+const viewValues = ["list", "grid", "compact"] as const;
 
 export function JournalPageClient() {
-  const [view, setView] = useState<"list" | "grid" | "compact">("list");
-  const [search, setSearch] = useState("");
+  const { openEdit } = useAccomplishmentPanelStore();
+  const [params, setParams] = useQueryStates({
+    search: parseAsString.withDefault(""),
+    categoryId: parseAsString.withDefault(""),
+    sortBy: parseAsStringLiteral(sortByValues).withDefault("date"),
+    sortOrder: parseAsStringLiteral(sortOrderValues).withDefault("desc"),
+    page: parseAsInteger.withDefault(1),
+    pageSize: parseAsNumberLiteral(PAGE_SIZE_VALUES).withDefault(8),
+    view: parseAsStringLiteral(viewValues).withDefault("list"),
+  });
+
+  const query = useMemo<Partial<AccomplishmentQuery>>(
+    () => ({
+      search: params.search || undefined,
+      categoryId: params.categoryId || undefined,
+      sortBy: params.sortBy,
+      sortOrder: params.sortOrder,
+      page: params.page,
+      pageSize: params.pageSize,
+    }),
+    [params],
+  );
+
+  const { data, isLoading, isFetching, isError } = useAccomplishments(query);
+  const { data: categories = [] } = useCategories();
+  const pagination = data?.pagination;
+  const totalPages = pagination?.totalPages ?? 0;
+  const currentPage = pagination?.page ?? params.page;
+  const paginationRange = pagination
+    ? getPaginationRange({
+        page: currentPage,
+        pageSize: pagination.pageSize,
+        total: pagination.total,
+      })
+    : null;
+
+  const accomplishments = useMemo(
+    () => data?.data.map(toAccomplishmentWithCategory) ?? [],
+    [data],
+  );
+
+  useEffect(() => {
+    if (totalPages > 0 && params.page > totalPages) {
+      setParams({ page: totalPages });
+    }
+  }, [params.page, setParams, totalPages]);
+
   return (
     <div className="flex flex-col gap-4">
       <PageHeading
@@ -163,22 +103,130 @@ export function JournalPageClient() {
         onMenu={() => {}}
       />
 
-      {/* <Controls
-        view={view}
-        setView={setView}
-        search={search}
-        setSearch={setSearch}
-      /> */}
+      <div className="mt-[35px] flex gap-2.5 text-xs text-muted-foreground">
+        <span>{formatMonthYear(new Date())}</span>
+        <span className="text-[#bbb6ab]">·</span>
+        <span>
+          {formatCountLabel(accomplishments.length, "accomplishment")}
+        </span>
+        <span className="text-[#bbb6ab]">·</span>
+        <span>
+          {formatCountLabel(categories.length, "area", "areas")} of work
+        </span>
+      </div>
+      <Controls
+        view={params.view}
+        setView={(view) => setParams({ view })}
+        search={params.search}
+        setSearch={(search) => setParams({ search, page: 1 })}
+        categoryId={params.categoryId}
+        setCategoryId={(categoryId) => setParams({ categoryId, page: 1 })}
+        sortBy={params.sortBy}
+        sortOrder={params.sortOrder}
+        setSort={(value) => {
+          const [sortBy, sortOrder] = value.split(":") as [
+            AccomplishmentQuery["sortBy"],
+            AccomplishmentQuery["sortOrder"],
+          ];
+          setParams({ sortBy, sortOrder, page: 1 });
+        }}
+      />
+
       <div>
+        {isError && (
+          <p className="border-b py-8 text-sm text-destructive">
+            Failed to load accomplishments.
+          </p>
+        )}
+
+        {isLoading &&
+          loadingRows.map((row) => <AccomplishmentRowSkeleton key={row} />)}
+
+        {!isLoading && !isError && accomplishments.length === 0 && (
+          <p className="border-b py-8 text-sm text-muted-foreground">
+            No accomplishments found.
+          </p>
+        )}
+
         {accomplishments.map((accomplishment) => (
           <AccomplishmentRow
             accomplishment={accomplishment}
             key={accomplishment.id}
-            compact={view === "compact"}
-            onSelect={() => {}}
+            compact={params.view === "compact"}
+            onSelect={() =>
+              openEdit(toEditingAccomplishment(accomplishment), "drawer")
+            }
           />
         ))}
       </div>
+
+      {pagination && pagination.total > 0 && (
+        <div className="flex items-center justify-between gap-3 pt-2 text-xs text-muted-foreground max-[640px]:flex-col max-[640px]:items-stretch">
+          <div className="flex items-center gap-3 max-[640px]:justify-between">
+            {paginationRange && (
+              <span>
+                Showing {paginationRange.start}-{paginationRange.end} of{" "}
+                {pagination.total}
+              </span>
+            )}
+
+            <div className="flex items-center gap-2">
+              <span id="journal-page-size-label">Rows</span>
+              <Select
+                value={String(params.pageSize)}
+                onValueChange={(value) =>
+                  setParams({
+                    page: 1,
+                    pageSize: parseNumber(
+                      value,
+                    ) as (typeof PAGE_SIZE_VALUES)[number],
+                  })
+                }
+              >
+                <SelectTrigger
+                  className="h-7 w-18 text-xs"
+                  aria-labelledby="journal-page-size-label"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {PAGE_SIZE_VALUES.map((pageSize) => (
+                    <SelectItem key={pageSize} value={String(pageSize)}>
+                      {pageSize}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 max-[640px]:justify-between">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={currentPage <= 1 || isFetching}
+              onClick={() => setParams({ page: getPreviousPage(currentPage) })}
+            >
+              <ChevronLeft size={14} />
+              Previous
+            </Button>
+            <span className="min-w-20 text-center">
+              Page {currentPage} of {getDisplayPageCount(totalPages)}
+            </span>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={currentPage >= totalPages || isFetching}
+              onClick={() => setParams({ page: currentPage + 1 })}
+            >
+              Next
+              <ChevronRight size={14} />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { CategoryDot } from "@/components/category-dot";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCategoryPanelStore } from "@/store/categories-panel-store";
 import type { Category } from "@/types/category";
+import { pluralize } from "@/utils/string";
 
 export function CategoryRow({ category }: { category: Category }) {
   const { openEdit, openDelete } = useCategoryPanelStore();
@@ -20,9 +21,7 @@ export function CategoryRow({ category }: { category: Category }) {
 
           <span className="text-xs tabular-nums text-stone-400">
             {category.accomplishmentCount}{" "}
-            {category.accomplishmentCount === 1
-              ? "accomplishment"
-              : "accomplishments"}
+            {pluralize(category.accomplishmentCount, "accomplishment")}
           </span>
         </div>
       </div>

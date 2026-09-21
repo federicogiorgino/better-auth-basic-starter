@@ -1,48 +1,108 @@
 import { cn } from "cn";
 import {
   Archive,
-  CalendarDays,
-  ChevronDown,
   Grid2X2,
   List,
   Search,
   SlidersHorizontal,
 } from "lucide-react";
+import { CategoryDot } from "@/components/category-dot";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useCategories } from "@/hooks/use-categories";
+import type { AccomplishmentQuery } from "@/types/accomplishment";
 
 const filterButtonClass =
-  "flex items-center gap-[7px] rounded border bg-transparent px-2.5 py-2 text-[11px] text-[#706d66] max-[800px]:flex-1 max-[800px]:justify-center max-[800px]:[&>span]:truncate";
+  "h-8 w-[170px] rounded border bg-transparent text-[11px] text-[#706d66] max-[800px]:flex-1";
+
+type ViewMode = "list" | "grid" | "compact";
+type SortValue =
+  `${AccomplishmentQuery["sortBy"]}:${AccomplishmentQuery["sortOrder"]}`;
 
 export function Controls({
   view,
   setView,
   search,
   setSearch,
+  categoryId,
+  setCategoryId,
+  sortBy,
+  sortOrder,
+  setSort,
 }: {
-  view: string;
-  setView: (v: "list" | "grid" | "compact") => void;
+  view: ViewMode;
+  setView: (value: ViewMode) => void;
   search: string;
-  setSearch: (s: string) => void;
+  setSearch: (value: string) => void;
+  categoryId: string;
+  setCategoryId: (value: string) => void;
+  sortBy: AccomplishmentQuery["sortBy"];
+  sortOrder: AccomplishmentQuery["sortOrder"];
+  setSort: (value: SortValue) => void;
 }) {
+  const { data: categories = [], isLoading } = useCategories();
+  const sortValue = `${sortBy}:${sortOrder}` as SortValue;
+
   return (
-    <div className="flex items-center gap-2 border-b pt-[38px] pb-4 max-[800px]:flex-wrap max-[800px]:pt-7">
-      <label className="flex max-w-[260px] flex-1 items-center gap-2 border-b border-[#cbc7bc] py-[7px] text-[var(--muted)] max-[800px]:max-w-none max-[800px]:basis-full">
+    <div className="flex items-center gap-2 border-b pt-9.5 pb-4 max-[800px]:flex-wrap max-[800px]:pt-7">
+      <label className="flex max-w-65 flex-1 items-center gap-2 border-b border-[#cbc7bc] py-1.75 text-muted-foreground max-[800px]:max-w-none max-[800px]:basis-full">
         <Search size={15} />
         <input
-          className="w-full border-0 bg-transparent text-xs text-[var(--ink)] outline-none"
+          className="w-full border-0 bg-transparent text-xs outline-none"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search your work"
           aria-label="Search your work"
         />
       </label>
-      <button type="button" className={filterButtonClass}>
-        <CalendarDays size={15} /> <span>September</span>
-        <ChevronDown size={14} />
-      </button>
-      <button type="button" className={filterButtonClass}>
-        <SlidersHorizontal size={15} /> <span>All areas</span>
-        <ChevronDown size={14} />
-      </button>
+
+      <Select
+        value={sortValue}
+        onValueChange={(value) => setSort(value as SortValue)}
+      >
+        <SelectTrigger className={filterButtonClass} aria-label="Sort work">
+          <SlidersHorizontal size={15} />
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="date:desc">Newest date</SelectItem>
+          <SelectItem value="date:asc">Oldest date</SelectItem>
+          <SelectItem value="createdAt:desc">Recently added</SelectItem>
+          <SelectItem value="createdAt:asc">First added</SelectItem>
+          <SelectItem value="title:asc">Title A-Z</SelectItem>
+          <SelectItem value="title:desc">Title Z-A</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select
+        value={categoryId || "all"}
+        onValueChange={(value) => setCategoryId(value === "all" ? "" : value)}
+        disabled={isLoading}
+      >
+        <SelectTrigger
+          className={filterButtonClass}
+          aria-label="Filter by category"
+        >
+          <SelectValue
+            placeholder={isLoading ? "Loading..." : "All categories"}
+          />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All categories</SelectItem>
+          {categories.map((category) => (
+            <SelectItem key={category.id} value={category.id}>
+              <CategoryDot color={category.color} size="sm" />
+              {category.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
       <div className="ml-auto flex items-center gap-0.5 rounded border bg-transparent p-[3px] text-[11px] text-[#706d66] max-[800px]:ml-auto">
         <button
           type="button"

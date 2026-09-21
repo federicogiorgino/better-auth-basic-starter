@@ -27,7 +27,15 @@ export type AccomplishmentWithCategory = Accomplishment & {
   category: CategorySummary;
 };
 
-export type AccomplishmentListItem = Accomplishment & {
+export type SerializedAccomplishment = Omit<
+  Accomplishment,
+  "createdAt" | "updatedAt"
+> & {
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type AccomplishmentListItem = SerializedAccomplishment & {
   categoryName: string;
   categoryColor: string;
 };

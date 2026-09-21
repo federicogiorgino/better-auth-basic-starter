@@ -3,6 +3,7 @@
 import { NotebookPen, Settings, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CategoryDot } from "@/components/category-dot";
 import {
   Sidebar,
   SidebarContent,
@@ -17,29 +18,12 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { NAVIGATION_MAIN_LINKS } from "@/constants/navigation";
-import { cn } from "@/lib/utils";
 import type { Category } from "@/types/category";
 import AccomplishmentButton from "../accomplishment-button";
 
 type AppSidebarProps = {
   categories: Category[];
 };
-
-function CategoryDot({
-  color,
-  className,
-}: {
-  color: string;
-  className?: string;
-}) {
-  return (
-    <span
-      className={cn("inline-block size-[7px] shrink-0 rounded-full", className)}
-      style={{ backgroundColor: color }}
-      aria-hidden="true"
-    />
-  );
-}
 
 export function AppSidebar({ categories }: AppSidebarProps) {
   const pathname = usePathname();
@@ -113,7 +97,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
                 <SidebarMenuItem key={category.name}>
                   <SidebarMenuButton asChild>
                     <Link
-                      href={`/journal?category=${encodeURIComponent(category.name)}`}
+                      href={`/journal?categoryId=${encodeURIComponent(category.id)}`}
                       onClick={handleNavigate}
                     >
                       <CategoryDot color={category.color} />

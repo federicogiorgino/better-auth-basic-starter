@@ -1,8 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -38,6 +38,8 @@ import type {
   CreateAccomplishmentFormValues,
   EditingAccomplishment,
 } from "@/types/accomplishment";
+import { getAccomplishmentFormDefaultValues } from "@/utils/accomplishments";
+import { formatInputDate, formatLongDate, toDate } from "@/utils/date";
 
 type AccomplishmentFormProps = {
   defaultValues?: EditingAccomplishment | null;
@@ -58,16 +60,13 @@ export function AccomplishmentForm({
 
   const form = useForm<CreateAccomplishmentFormValues>({
     resolver: zodResolver(createAccomplishmentSchema),
-    defaultValues: {
-      categoryId: defaultValues?.categoryId ?? "",
-      title: defaultValues?.title ?? "",
-      date: defaultValues?.date ?? format(new Date(), "yyyy-MM-dd"),
-      impact: defaultValues?.impact ?? "",
-      notes: defaultValues?.notes ?? "",
-      link: defaultValues?.link ?? "",
-    },
+    defaultValues: getAccomplishmentFormDefaultValues(defaultValues),
     mode: "onChange",
   });
+
+  useEffect(() => {
+    form.reset(getAccomplishmentFormDefaultValues(defaultValues));
+  }, [defaultValues, form]);
 
   function onSubmit(values: CreateAccomplishmentFormValues) {
     if (isEditing && defaultValues) {
@@ -145,16 +144,16 @@ export function AccomplishmentForm({
                     >
                       <CalendarIcon />
                       {field.value
-                        ? format(new Date(field.value), "PPP")
+                        ? formatLongDate(field.value)
                         : "Pick a date"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
-                      selected={field.value ? new Date(field.value) : undefined}
+                      selected={field.value ? toDate(field.value) : undefined}
                       onSelect={(date) =>
-                        field.onChange(date ? format(date, "yyyy-MM-dd") : "")
+                        field.onChange(date ? formatInputDate(date) : "")
                       }
                       autoFocus
                     />
