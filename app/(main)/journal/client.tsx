@@ -52,6 +52,8 @@ export function JournalPageClient() {
   const [params, setParams] = useQueryStates({
     search: parseAsString.withDefault(""),
     categoryId: parseAsString.withDefault(""),
+    dateFrom: parseAsString.withDefault(""),
+    dateTo: parseAsString.withDefault(""),
     sortBy: parseAsStringLiteral(sortByValues).withDefault("date"),
     sortOrder: parseAsStringLiteral(sortOrderValues).withDefault("desc"),
     page: parseAsInteger.withDefault(1),
@@ -63,6 +65,8 @@ export function JournalPageClient() {
     () => ({
       search: params.search || undefined,
       categoryId: params.categoryId || undefined,
+      dateFrom: params.dateFrom || undefined,
+      dateTo: params.dateTo || undefined,
       sortBy: params.sortBy,
       sortOrder: params.sortOrder,
       page: params.page,

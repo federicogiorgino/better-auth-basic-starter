@@ -118,7 +118,7 @@ export function ReviewPageClient() {
         onMenu={() => {}}
       />
 
-      <div className="mt-9 flex items-end justify-between gap-6 border-b pb-10 max-md:flex-col max-md:items-start">
+      <div className="mt-4 flex items-end justify-between gap-6 border-b pb-10 max-md:flex-col max-md:items-start">
         <div className="flex gap-16 max-md:gap-10">
           <ReviewStat
             isLoading={isLoading}

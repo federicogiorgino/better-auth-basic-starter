@@ -12,6 +12,13 @@ export type AccomplishmentDayGroup = {
   accomplishments: AccomplishmentWithCategory[];
 };
 
+export type AccomplishmentCategoryCount = {
+  categoryId: string;
+  name: string;
+  color: string;
+  count: number;
+};
+
 export function groupAccomplishmentsByDate(
   accomplishments: AccomplishmentWithCategory[],
 ): AccomplishmentDayGroup[] {
@@ -33,6 +40,51 @@ export function groupAccomplishmentsByDate(
   }
 
   return Array.from(groups.values());
+}
+
+export function groupAccomplishmentListItemsByDate(
+  accomplishments: AccomplishmentListItem[],
+) {
+  const groups = new Map<string, AccomplishmentListItem[]>();
+
+  for (const accomplishment of accomplishments) {
+    const group = groups.get(accomplishment.date);
+
+    if (group) {
+      group.push(accomplishment);
+      continue;
+    }
+
+    groups.set(accomplishment.date, [accomplishment]);
+  }
+
+  return groups;
+}
+
+export function getAccomplishmentCategoryCounts(
+  accomplishments: AccomplishmentListItem[],
+) {
+  const categories = new Map<string, AccomplishmentCategoryCount>();
+
+  for (const accomplishment of accomplishments) {
+    const category = categories.get(accomplishment.categoryId);
+
+    if (category) {
+      category.count += 1;
+      continue;
+    }
+
+    categories.set(accomplishment.categoryId, {
+      categoryId: accomplishment.categoryId,
+      name: accomplishment.categoryName,
+      color: accomplishment.categoryColor,
+      count: 1,
+    });
+  }
+
+  return Array.from(categories.values()).toSorted(
+    (first, second) => second.count - first.count,
+  );
 }
 
 export function toAccomplishmentWithCategory(

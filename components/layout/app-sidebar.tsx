@@ -42,7 +42,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
       <SidebarHeader className="gap-0 px-3 pt-4 pb-0">
         {/* Logo */}
         <Link
-          href="/journal"
+          href="/"
           onClick={handleNavigate}
           className="flex items-center gap-2 px-2 text-xs font-bold tracking-widest"
         >
