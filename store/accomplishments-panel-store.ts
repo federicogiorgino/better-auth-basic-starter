@@ -1,14 +1,6 @@
-// store/accomplishments-modal-store.ts
 import { create } from "zustand";
-
-type PanelMode = "modal" | "drawer";
-
-type EditingAccomplishment = {
-  id: string;
-  title: string;
-  date: string;
-  categoryId: string;
-};
+import type { EditingAccomplishment } from "@/types/accomplishment";
+import type { PanelMode } from "@/types/panel";
 
 type AccomplishmentPanelState = {
   isOpen: boolean;
@@ -28,6 +20,6 @@ export const useAccomplishmentPanelStore = create<AccomplishmentPanelState>(
       set({ isOpen: true, mode, editingAccomplishment: null }),
     openEdit: (accomplishment, mode) =>
       set({ isOpen: true, mode, editingAccomplishment: accomplishment }),
-    close: () => set({ isOpen: false, editingAccomplishment: null }),
+    close: () => set({ isOpen: false }), // don't clear editingAccomplishment — avoids title/content flicker on close animation
   }),
 );

@@ -6,7 +6,7 @@ import type {
   createAccomplishmentSchema,
   updateAccomplishmentSchema,
 } from "@/schemas/accomplishement";
-import type { Category } from "./category";
+import type { CategorySummary } from "./category";
 
 export type CreateAccomplishmentFormValues = z.infer<
   typeof createAccomplishmentSchema
@@ -15,8 +15,29 @@ export type UpdateAccomplishmentFormValues = z.infer<
   typeof updateAccomplishmentSchema
 >;
 export type AccomplishmentQuery = z.infer<typeof accomplishmentQuerySchema>;
-export type Accomplishment = InferSelectModel<typeof accomplishments>;
+export type AccomplishmentRecord = InferSelectModel<typeof accomplishments>;
+export type Accomplishment = AccomplishmentRecord;
+
+export type EditingAccomplishment = Pick<
+  AccomplishmentRecord,
+  "id" | "title" | "date" | "categoryId" | "impact" | "notes" | "link"
+>;
 
 export type AccomplishmentWithCategory = Accomplishment & {
-  category: Category;
+  category: CategorySummary;
+};
+
+export type AccomplishmentListItem = Accomplishment & {
+  categoryName: string;
+  categoryColor: string;
+};
+
+export type PaginatedAccomplishments = {
+  data: AccomplishmentListItem[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
 };

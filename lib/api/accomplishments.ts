@@ -1,29 +1,9 @@
-import type { AccomplishmentQuery } from "@/types/accomplishment";
-
-export type Accomplishment = {
-  id: string;
-  userId: string;
-  categoryId: string;
-  categoryName: string;
-  categoryColor: string;
-  title: string;
-  date: string;
-  impact: string | null;
-  notes: string | null;
-  link: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type PaginatedAccomplishments = {
-  data: Accomplishment[];
-  pagination: {
-    page: number;
-    pageSize: number;
-    total: number;
-    totalPages: number;
-  };
-};
+import type {
+  AccomplishmentQuery,
+  CreateAccomplishmentFormValues,
+  PaginatedAccomplishments,
+  UpdateAccomplishmentFormValues,
+} from "@/types/accomplishment";
 
 export async function fetchAccomplishments(
   query: Partial<AccomplishmentQuery>,
@@ -38,14 +18,9 @@ export async function fetchAccomplishments(
   return res.json();
 }
 
-export async function createAccomplishment(input: {
-  categoryId: string;
-  title: string;
-  date: string;
-  impact?: string;
-  notes?: string;
-  link?: string;
-}) {
+export async function createAccomplishment(
+  input: CreateAccomplishmentFormValues,
+) {
   const res = await fetch("/api/accomplishments", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -60,14 +35,7 @@ export async function createAccomplishment(input: {
 
 export async function updateAccomplishment(
   id: string,
-  input: Partial<{
-    categoryId: string;
-    title: string;
-    date: string;
-    impact: string;
-    notes: string;
-    link: string;
-  }>,
+  input: UpdateAccomplishmentFormValues,
 ) {
   const res = await fetch(`/api/accomplishments/${id}`, {
     method: "PATCH",

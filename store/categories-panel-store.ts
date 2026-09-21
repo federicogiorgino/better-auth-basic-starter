@@ -1,10 +1,7 @@
 // store/categories-panel-store.ts
 import { create } from "zustand";
-
-type PanelMode = "modal" | "drawer";
-
-type EditingCategory = { id: string; name: string; color: string };
-type DeletingCategory = { id: string; name: string };
+import type { DeletingCategory, EditingCategory } from "@/types/category";
+import type { PanelMode } from "@/types/panel";
 
 type CategoryPanelState = {
   isOpen: boolean;

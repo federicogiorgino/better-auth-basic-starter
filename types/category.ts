@@ -6,19 +6,17 @@ import type {
   updateCategorySchema,
 } from "@/schemas/category";
 
-// export type Category = {
-//   id: string;
-//   userId: string;
-//   name: string;
-//   color: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   accomplishmentCount: number;
-// };
+export type CategoryRecord = InferSelectModel<typeof categories>;
 
-export type Category = InferSelectModel<typeof categories> & {
+export type CategorySummary = Pick<CategoryRecord, "id" | "name" | "color">;
+
+export type CategoryWithAccomplishmentCount = CategoryRecord & {
   accomplishmentCount: number;
 };
+
+export type Category = CategoryWithAccomplishmentCount;
+export type EditingCategory = CategorySummary;
+export type DeletingCategory = Pick<CategoryRecord, "id" | "name">;
 
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
 export type UpdateCategoryInput = z.infer<typeof updateCategorySchema>;
