@@ -9,6 +9,10 @@ import {
   useQueryStates,
 } from "nuqs";
 import { useEffect, useMemo } from "react";
+import {
+  AccomplishmentRow,
+  AccomplishmentRowSkeleton,
+} from "@/components/accomplishment-row";
 import { PageHeading } from "@/components/page-heading";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,10 +40,6 @@ import {
   PAGE_SIZE_VALUES,
 } from "@/utils/pagination";
 import { formatCountLabel } from "@/utils/string";
-import {
-  AccomplishmentRow,
-  AccomplishmentRowSkeleton,
-} from "./_components/accomplishment-row";
 import { Controls } from "./_components/controls";
 
 const loadingRows = ["loading-1", "loading-2", "loading-3", "loading-4"];

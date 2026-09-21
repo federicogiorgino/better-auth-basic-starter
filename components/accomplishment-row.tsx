@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { CategoryDot } from "@/components/category-dot";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -7,9 +8,10 @@ import { formatTime } from "@/utils/date";
 
 type AccomplishmentRowProps = {
   accomplishment: AccomplishmentWithCategory;
-  onSelect: () => void;
+  onSelect?: () => void;
   compact?: boolean;
   showDate?: boolean;
+  trailing?: ReactNode;
 };
 
 const serifHeadingClass = "m-0 font-serif text-lg tracking-tight";
@@ -19,6 +21,7 @@ export function AccomplishmentRow({
   onSelect,
   compact = false,
   showDate = true,
+  trailing,
 }: AccomplishmentRowProps) {
   return (
     <button
@@ -65,14 +68,14 @@ export function AccomplishmentRow({
         )}
       </div>
 
-      <time
+      <span
         className={cn(
           "self-end text-xs text-muted-foreground max-md:mt-8 max-md:self-start",
           compact && "mt-0 ml-auto self-end",
         )}
       >
-        {formatTime(accomplishment.createdAt)}
-      </time>
+        {trailing ?? formatTime(accomplishment.createdAt)}
+      </span>
 
       <ArrowRight
         className="text-muted-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 max-md:hidden"

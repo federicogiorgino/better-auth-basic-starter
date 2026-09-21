@@ -5,6 +5,7 @@ export const DATE_FORMATS = {
   input: "yyyy-MM-dd",
   long: "PPP",
   monthYear: "MMMM yyyy",
+  shortMonthDay: "MMMM d",
 } as const;
 
 const inputDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -23,6 +24,10 @@ export function formatLongDate(date: Date | string) {
 
 export function formatMonthYear(date: Date | string) {
   return format(toDate(date), DATE_FORMATS.monthYear);
+}
+
+export function formatShortMonthDay(date: Date | string) {
+  return format(toDate(date), DATE_FORMATS.shortMonthDay);
 }
 
 export function formatTime(date: Date | string) {
