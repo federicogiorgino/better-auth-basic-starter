@@ -23,6 +23,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { useAccomplishmentPanelStore } from "@/store/accomplishments-panel-store";
 import type { AccomplishmentQuery } from "@/types/accomplishment";
 import {
+  groupAccomplishmentsByDate,
   toAccomplishmentWithCategory,
   toEditingAccomplishment,
 } from "@/utils/accomplishments";
@@ -87,6 +88,10 @@ export function JournalPageClient() {
     () => data?.data.map(toAccomplishmentWithCategory) ?? [],
     [data],
   );
+  const accomplishmentGroups = useMemo(
+    () => groupAccomplishmentsByDate(accomplishments),
+    [accomplishments],
+  );
 
   useEffect(() => {
     if (totalPages > 0 && params.page > totalPages) {
@@ -148,15 +153,24 @@ export function JournalPageClient() {
           </p>
         )}
 
-        {accomplishments.map((accomplishment) => (
-          <AccomplishmentRow
-            accomplishment={accomplishment}
-            key={accomplishment.id}
-            compact={params.view === "compact"}
-            onSelect={() =>
-              openEdit(toEditingAccomplishment(accomplishment), "drawer")
-            }
-          />
+        {accomplishmentGroups.map((group) => (
+          <section key={group.date} className="border-b">
+            <h2 className="bg-background py-3 text-[11px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+              {group.heading}
+            </h2>
+
+            {group.accomplishments.map((accomplishment) => (
+              <AccomplishmentRow
+                accomplishment={accomplishment}
+                key={accomplishment.id}
+                compact={params.view === "compact"}
+                showDate={false}
+                onSelect={() =>
+                  openEdit(toEditingAccomplishment(accomplishment), "drawer")
+                }
+              />
+            ))}
+          </section>
         ))}
       </div>
 

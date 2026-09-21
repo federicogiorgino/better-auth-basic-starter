@@ -9,6 +9,7 @@ type AccomplishmentRowProps = {
   accomplishment: AccomplishmentWithCategory;
   onSelect: () => void;
   compact?: boolean;
+  showDate?: boolean;
 };
 
 const serifHeadingClass =
@@ -18,6 +19,7 @@ export function AccomplishmentRow({
   accomplishment,
   onSelect,
   compact = false,
+  showDate = true,
 }: AccomplishmentRowProps) {
   return (
     <button
@@ -50,7 +52,7 @@ export function AccomplishmentRow({
             {accomplishment.category.name}
           </span>
 
-          {!compact && <span>{accomplishment.date}</span>}
+          {!compact && showDate && <span>{accomplishment.date}</span>}
         </div>
 
         <h3 className={cn(serifHeadingClass, compact && "mb-0 text-[14px]")}>

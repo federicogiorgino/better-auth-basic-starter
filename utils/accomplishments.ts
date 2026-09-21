@@ -4,7 +4,36 @@ import type {
   CreateAccomplishmentFormValues,
   EditingAccomplishment,
 } from "@/types/accomplishment";
-import { formatInputDate, toDate } from "./date";
+import { formatDayHeading, formatInputDate, toDate } from "./date";
+
+export type AccomplishmentDayGroup = {
+  date: string;
+  heading: string;
+  accomplishments: AccomplishmentWithCategory[];
+};
+
+export function groupAccomplishmentsByDate(
+  accomplishments: AccomplishmentWithCategory[],
+): AccomplishmentDayGroup[] {
+  const groups = new Map<string, AccomplishmentDayGroup>();
+
+  for (const accomplishment of accomplishments) {
+    const group = groups.get(accomplishment.date);
+
+    if (group) {
+      group.accomplishments.push(accomplishment);
+      continue;
+    }
+
+    groups.set(accomplishment.date, {
+      date: accomplishment.date,
+      heading: formatDayHeading(accomplishment.date),
+      accomplishments: [accomplishment],
+    });
+  }
+
+  return Array.from(groups.values());
+}
 
 export function toAccomplishmentWithCategory(
   item: AccomplishmentListItem,
