@@ -3,6 +3,7 @@
 
 import { Panel } from "@/components/panel";
 import { useAccomplishmentPanelStore } from "@/store/accomplishments-panel-store";
+import { AccomplishmentForm } from "../forms/accomplishment-form";
 
 export function AccomplishmentPanel() {
   const { isOpen, mode, editingAccomplishment, close } =
@@ -17,15 +18,7 @@ export function AccomplishmentPanel() {
         editingAccomplishment ? "Edit accomplishment" : "New accomplishment"
       }
     >
-      <div>CIAO</div>
-      <div>CIAO</div>
-      <div>CIAO</div>
-      <div>CIAO</div>
-      <div>CIAO</div>
-      <div>CIAO</div>
-      <div>CIAO</div>
-      <div>CIAO</div>
-      {/* <AccomplishmentForm defaultValues={editingAccomplishment} onSuccess={close} /> */}
+      <AccomplishmentForm defaultValues={editingAccomplishment} />
     </Panel>
   );
 }

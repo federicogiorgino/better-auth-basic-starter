@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { PageHeading } from "@/components/page-heading";
 import type { AccomplishmentWithCategory } from "@/types/accomplishment";
 import AccomplishmentRow from "./_components/accomplishment-row";
+import { Controls } from "./_components/controls";
 
 export const accomplishments: AccomplishmentWithCategory[] = [
   {
@@ -150,6 +152,8 @@ export const accomplishments: AccomplishmentWithCategory[] = [
 ];
 
 export function JournalPageClient() {
+  const [view, setView] = useState<"list" | "grid" | "compact">("list");
+  const [search, setSearch] = useState("");
   return (
     <div className="flex flex-col gap-4">
       <PageHeading
@@ -158,11 +162,20 @@ export function JournalPageClient() {
         subtitle="Manage your journal entries"
         onMenu={() => {}}
       />
+
+      {/* <Controls
+        view={view}
+        setView={setView}
+        search={search}
+        setSearch={setSearch}
+      /> */}
       <div>
         {accomplishments.map((accomplishment) => (
           <AccomplishmentRow
             accomplishment={accomplishment}
             key={accomplishment.id}
+            compact={view === "compact"}
+            onSelect={() => {}}
           />
         ))}
       </div>

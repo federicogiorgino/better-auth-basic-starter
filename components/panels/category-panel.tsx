@@ -1,7 +1,7 @@
 // components/category-modal.tsx
 "use client";
 
-import { CategoryForm } from "@/components/category-form";
+import { CategoryForm } from "@/components/forms/category-form";
 import { Panel } from "@/components/panel";
 import { useCategoryPanelStore } from "@/store/categories-panel-store";
 

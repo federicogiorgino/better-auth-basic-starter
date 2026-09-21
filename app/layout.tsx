@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, PT_Serif } from "next/font/google";
 import "./globals.css";
-import { AccomplishmentPanel } from "@/components/accomplishment-panel";
-import { CategoryDeleteDialog } from "@/components/category-delete-modal";
-import { CategoryPanel } from "@/components/category-panel";
+import { AccomplishmentPanel } from "@/components/panels/accomplishment-panel";
+import { CategoryDeleteDialog } from "@/components/panels/category-delete-modal";
+import { CategoryPanel } from "@/components/panels/category-panel";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
