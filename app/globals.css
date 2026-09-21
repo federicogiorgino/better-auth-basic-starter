@@ -128,3 +128,19 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .auth-image-overlay {
+    background: color-mix(in oklch, var(--foreground) 24%, transparent);
+    box-shadow:
+      inset 120px 0 160px -70px var(--background),
+      inset 0 0 180px rgb(0 0 0 / 42%);
+  }
+
+  .dark .auth-image-overlay {
+    background: color-mix(in oklch, black 40%, transparent);
+    box-shadow:
+      inset 120px 0 180px -70px black,
+      inset 0 0 220px rgb(0 0 0 / 38%);
+  }
+}

@@ -29,8 +29,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "App Starter",
-  description: "Next.js starter with Better Auth and Drizzle",
+  title: "Tracenotes",
+  description: "Small notes. Clearer progress.",
 };
 
 export default function RootLayout({

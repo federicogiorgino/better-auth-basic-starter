@@ -80,7 +80,7 @@ export function HomePageClient() {
       <PageHeading
         eyebrow={formatLongDate(today)}
         title="Today"
-        subtitle="A quiet place to continue your work log."
+        subtitle="Small notes. Clearer progress."
         onMenu={() => {}}
       />
 

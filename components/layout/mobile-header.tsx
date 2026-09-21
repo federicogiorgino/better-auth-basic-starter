@@ -11,7 +11,7 @@ export function MobileHeader() {
         <span className="grid size-7 place-items-center rounded-md bg-sidebar-primary tracking-normal text-sidebar-primary-foreground">
           <NotebookPen size={15} />
         </span>
-        WORK LOG
+        TRACENOTES
       </span>
 
       <SidebarTrigger />

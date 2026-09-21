@@ -8,13 +8,14 @@ import {
   Download,
   Keyboard,
   Lock,
+  LogOut,
   Moon,
   Settings,
   Sparkles,
   Sun,
-  Upload,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useMemo, useState } from "react";
 import { PageHeading } from "@/components/page-heading";
@@ -29,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { useAccomplishments } from "@/hooks/use-accomplishments";
 import { useCategories } from "@/hooks/use-categories";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
 const themeOptions = [
@@ -50,7 +52,9 @@ const themeOptions = [
 ];
 
 export function SettingsPageClient() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const [reminders, setReminders] = useState(true);
   const [weeklyReview, setWeeklyReview] = useState(true);
   const [privateMode, setPrivateMode] = useState(false);
@@ -84,7 +88,7 @@ export function SettingsPageClient() {
     [accomplishments, categories],
   );
 
-  function exportWorkLog() {
+  function exportTracenotes() {
     const blob = new Blob([JSON.stringify(exportPayload, null, 2)], {
       type: "application/json",
     });
@@ -92,9 +96,24 @@ export function SettingsPageClient() {
     const link = document.createElement("a");
 
     link.href = url;
-    link.download = "work-log-export.json";
+    link.download = "tracenotes-export.json";
     link.click();
     URL.revokeObjectURL(url);
+  }
+
+  function signOut() {
+    setIsSigningOut(true);
+    authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+          router.refresh();
+        },
+        onError: () => {
+          setIsSigningOut(false);
+        },
+      },
+    });
   }
 
   return (
@@ -102,7 +121,7 @@ export function SettingsPageClient() {
       <PageHeading
         eyebrow="Workspace"
         title="Settings"
-        subtitle="Small choices for a calmer work log."
+        subtitle="Small choices for Tracenotes."
         onMenu={() => {}}
       />
 
@@ -117,7 +136,7 @@ export function SettingsPageClient() {
                 Your workspace
               </h2>
               <p className="text-sm leading-6 text-muted-foreground">
-                Personal preferences for how you capture and revisit your work.
+                Small notes. Clearer progress.
               </p>
             </div>
           </div>
@@ -131,7 +150,7 @@ export function SettingsPageClient() {
         <SettingsSection eyebrow="Appearance">
           <SettingLine
             title="Theme"
-            description="Choose how Work Log looks on your screen."
+            description="Choose how Tracenotes looks on your screen."
           >
             <div className="flex border p-1">
               {themeOptions.map((option) => {
@@ -230,22 +249,11 @@ export function SettingsPageClient() {
             title="Backup your work"
             description="Download a copy of your entries as a portable JSON file."
           >
-            <Button type="button" variant="ghost" onClick={exportWorkLog}>
+            <Button type="button" variant="ghost" onClick={exportTracenotes}>
               Export
               <Download data-icon="inline-end" />
             </Button>
           </SettingLine>
-
-          {/* <SettingLine
-            icon={Upload}
-            title="Import a backup"
-            description="Restore entries from a Work Log export."
-          >
-            <Button type="button" variant="ghost">
-              Choose file
-              <Upload data-icon="inline-end" />
-            </Button>
-          </SettingLine> */}
         </SettingsSection>
 
         <SettingsSection eyebrow="Workspace">
@@ -272,15 +280,31 @@ export function SettingsPageClient() {
           </SettingLine>
         </SettingsSection>
 
+        <SettingsSection eyebrow="Account">
+          <SettingLine
+            icon={LogOut}
+            title="Sign out"
+            description="Leave this Tracenotes session on this device."
+          >
+            <Button
+              type="button"
+              variant="outline"
+              onClick={signOut}
+              disabled={isSigningOut}
+            >
+              {isSigningOut ? "Signing out..." : "Sign out"}
+              <LogOut data-icon="inline-end" />
+            </Button>
+          </SettingLine>
+        </SettingsSection>
+
         <div className="mt-7 flex items-start gap-3 text-muted-foreground">
           <CircleHelp size={18} />
           <div>
             <h3 className="mb-1 font-serif text-base leading-tight tracking-tight text-foreground">
-              About Work Log
+              About Tracenotes
             </h3>
-            <p className="text-sm leading-6">
-              A small place to keep the work you do from disappearing.
-            </p>
+            <p className="text-sm leading-6">Small notes. Clearer progress.</p>
           </div>
         </div>
       </div>

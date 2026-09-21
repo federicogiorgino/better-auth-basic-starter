@@ -5,7 +5,7 @@ import { db } from "../drizzle/db";
 import * as schema from "../drizzle/schemas/auth";
 
 export const auth = betterAuth({
-  appName: "App Starter",
+  appName: "Tracenotes",
   baseURL: process.env.BETTER_AUTH_URL,
   secret: process.env.BETTER_AUTH_SECRET,
   emailAndPassword: {

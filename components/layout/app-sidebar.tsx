@@ -50,7 +50,7 @@ export function AppSidebar({ categories }: AppSidebarProps) {
             <NotebookPen size={16} />
           </span>
 
-          <span>WORK LOG</span>
+          <span>TRACENOTES</span>
         </Link>
 
         {/* Add button */}
