@@ -119,7 +119,7 @@ export function AccomplishmentRowSkeleton({
         />
 
         {!compact && (
-          <div className="space-y-1.5">
+          <div className="flex flex-col gap-1.5">
             <Skeleton className="h-3 w-full max-w-md" />
             <Skeleton className="h-3 w-2/5 max-w-56 max-md:hidden" />
           </div>

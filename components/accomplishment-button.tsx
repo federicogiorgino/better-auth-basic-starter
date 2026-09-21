@@ -13,7 +13,6 @@ export default function AccomplishmentButton() {
     >
       <Plus size={17} />
       Add accomplishment
-      <kbd className="ml-auto text-xs text-primary-foreground/60">N</kbd>
     </Button>
   );
 }

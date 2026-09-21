@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { parseAsInteger, useQueryStates } from "nuqs";
 import { useMemo } from "react";
@@ -100,20 +100,20 @@ export function CalendarPageClient() {
         onMenu={() => {}}
       />
 
-      <div className="mt-8 flex items-center justify-between gap-4">
+      <div className="mt-6 flex items-center justify-between gap-4">
         <CalendarMonthLink date={previousMonth} direction="previous" />
-        <h2 className="text-center font-serif text-3xl leading-tight tracking-tight max-md:text-2xl">
+        <h2 className="text-center font-serif text-2xl leading-tight tracking-tight">
           {formatMonthYear(monthDate)}
         </h2>
         <CalendarMonthLink date={nextMonth} direction="next" />
       </div>
 
-      <section className="mt-4">
+      <section className="mt-3">
         <div className="grid grid-cols-7 border-t border-l">
           {weekdays.map((weekday) => (
             <div
               key={weekday.short}
-              className="border-r border-b px-3 py-2 text-xs font-bold tracking-widest text-muted-foreground uppercase max-md:px-1 max-md:text-center max-md:tracking-normal"
+              className="border-r border-b px-2.5 py-1.5 text-xs font-bold tracking-widest text-muted-foreground uppercase max-md:px-1 max-md:text-center max-md:tracking-normal"
             >
               <span className="max-md:hidden">{weekday.short}</span>
               <span className="hidden max-md:inline">{weekday.narrow}</span>
@@ -135,7 +135,7 @@ export function CalendarPageClient() {
                 key={inputDate}
                 type="button"
                 className={cn(
-                  "flex min-h-24 flex-col justify-between border-r border-b bg-transparent p-3 text-left text-muted-foreground transition-colors hover:bg-muted max-md:min-h-16 max-md:p-1.5",
+                  "flex min-h-20 flex-col justify-between border-r border-b bg-transparent p-2.5 text-left text-muted-foreground transition-colors hover:bg-muted max-md:min-h-16 max-md:p-1.5",
                   !inCurrentMonth && "bg-muted/30 text-muted-foreground/50",
                   isToday && "bg-muted",
                   isSelected &&
@@ -150,7 +150,7 @@ export function CalendarPageClient() {
               >
                 <span
                   className={cn(
-                    "inline-grid size-6 place-items-center text-base leading-none max-md:size-5 max-md:text-sm",
+                    "inline-grid size-5 place-items-center text-sm leading-none max-md:text-sm",
                     isToday &&
                       "rounded-full bg-foreground text-background max-md:size-5",
                   )}
@@ -158,18 +158,18 @@ export function CalendarPageClient() {
                   {date.getDate()}
                 </span>
 
-                <div className="flex min-h-8 flex-wrap items-end gap-1.5 max-md:min-h-4 max-md:gap-1">
+                <div className="flex min-h-6 flex-wrap items-end gap-1.5 max-md:min-h-4 max-md:gap-1">
                   {isLoading ? (
                     <Skeleton className="h-2.5 w-10 max-md:w-5" />
                   ) : (
                     categoriesForDay.slice(0, maxDotsPerDay).map((category) => {
                       const dotSize =
                         category.count >= 4
-                          ? "size-6 max-md:size-3.5"
+                          ? "size-5 max-md:size-3.5"
                           : category.count === 3
-                            ? "size-5 max-md:size-3"
+                            ? "size-4 max-md:size-3"
                             : category.count === 2
-                              ? "size-3.5 max-md:size-2.5"
+                              ? "size-3 max-md:size-2.5"
                               : "size-2.5 max-md:size-2";
 
                       return (
@@ -279,10 +279,9 @@ function CalendarDayPanel({
         </p>
       )}
 
-      <Button className="mt-5 w-full" variant="outline" asChild>
+      <Button className="mt-5 w-full" variant="default" asChild>
         <Link href={`/journal?dateFrom=${date}&dateTo=${date}`}>
           Open in journal
-          <ExternalLink data-icon="inline-end" />
         </Link>
       </Button>
     </div>

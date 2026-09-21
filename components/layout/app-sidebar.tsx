@@ -134,10 +134,6 @@ export function AppSidebar({ categories }: AppSidebarProps) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-
-        <span className="mt-2.5 block px-2 text-xs text-muted-foreground">
-          September 2026 · v1.0
-        </span>
       </SidebarFooter>
     </Sidebar>
   );

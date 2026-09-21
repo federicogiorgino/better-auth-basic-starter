@@ -1,6 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
+import { panelTitleClass } from "@/components/panel";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -39,9 +40,9 @@ export function CategoryDeleteDialog() {
       open={Boolean(deletingCategory)}
       onOpenChange={(open) => !open && closeDelete()}
     >
-      <AlertDialogContent>
+      <AlertDialogContent className="gap-5 p-5">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-md uppercase font-sans font-semibold mb-3">
+          <AlertDialogTitle className={panelTitleClass}>
             Delete category?
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -60,7 +61,7 @@ export function CategoryDeleteDialog() {
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={deleteCategory.isPending}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            variant="destructive"
           >
             {deleteCategory.isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>

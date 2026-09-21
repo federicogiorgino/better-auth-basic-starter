@@ -1,6 +1,7 @@
 // components/form-panel.tsx
 "use client";
 
+import type { ReactNode } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,15 +14,23 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 interface PanelProps {
   mode: "modal" | "drawer";
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
   side?: "left" | "right"; // only used in drawer mode
+  className?: string;
+  contentClassName?: string;
 }
+
+const panelHeaderClass = "border-b px-5 py-4 text-left";
+const panelBodyClass = "px-5 py-5";
+export const panelTitleClass =
+  "font-sans text-xs font-bold tracking-widest text-muted-foreground uppercase";
 
 export function Panel({
   mode,
@@ -30,17 +39,23 @@ export function Panel({
   title,
   children,
   side = "right",
+  className,
+  contentClassName,
 }: PanelProps) {
   if (mode === "drawer") {
     return (
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side={side} className="overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle className="text-md uppercase font-sans font-semibold">
-              {title}
-            </SheetTitle>
+        <SheetContent
+          side={side}
+          className={cn(
+            "overflow-y-auto p-0 max-sm:w-full max-sm:max-w-none",
+            className,
+          )}
+        >
+          <SheetHeader className={panelHeaderClass}>
+            <SheetTitle className={panelTitleClass}>{title}</SheetTitle>
           </SheetHeader>
-          <div className="px-4">{children}</div>
+          <div className={cn(panelBodyClass, contentClassName)}>{children}</div>
         </SheetContent>
       </Sheet>
     );
@@ -48,13 +63,11 @@ export function Panel({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="text-md uppercase font-sans font-semibold">
-            {title}
-          </DialogTitle>
+      <DialogContent className={cn("gap-0 p-0 sm:max-w-md", className)}>
+        <DialogHeader className={panelHeaderClass}>
+          <DialogTitle className={panelTitleClass}>{title}</DialogTitle>
         </DialogHeader>
-        {children}
+        <div className={cn(panelBodyClass, contentClassName)}>{children}</div>
       </DialogContent>
     </Dialog>
   );

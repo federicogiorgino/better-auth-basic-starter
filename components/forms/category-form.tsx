@@ -3,14 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { FormActions, FormShell } from "@/components/forms/form-layout";
 import { Button } from "@/components/ui/button";
 import { ColorPicker } from "@/components/ui/color-picker";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useCreateCategory, useUpdateCategory } from "@/hooks/use-categories";
 import { createCategorySchema } from "@/schemas/category";
@@ -63,7 +59,7 @@ export function CategoryForm({ defaultValues, onSuccess }: CategoryFormProps) {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-      <FieldGroup>
+      <FormShell>
         <Controller
           name="name"
           control={form.control}
@@ -110,18 +106,20 @@ export function CategoryForm({ defaultValues, onSuccess }: CategoryFormProps) {
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isPending || !form.formState.isValid}
-        >
-          {isPending
-            ? "Saving..."
-            : isEditing
-              ? "Save changes"
-              : "Create category"}
-        </Button>
-      </FieldGroup>
+        <FormActions>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isPending || !form.formState.isValid}
+          >
+            {isPending
+              ? "Saving..."
+              : isEditing
+                ? "Save changes"
+                : "Create category"}
+          </Button>
+        </FormActions>
+      </FormShell>
     </form>
   );
 }

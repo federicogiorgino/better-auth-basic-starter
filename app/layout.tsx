@@ -5,6 +5,7 @@ import { AccomplishmentPanel } from "@/components/panels/accomplishment-panel";
 import { CategoryDeleteDialog } from "@/components/panels/category-delete-modal";
 import { CategoryPanel } from "@/components/panels/category-panel";
 import { Providers } from "@/components/providers";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -40,6 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "h-full",
         "antialiased",
@@ -50,17 +52,24 @@ export default function RootLayout({
         ptSerifHeading.variable,
       )}
     >
-      <body>
-        <Providers>
-          <TooltipProvider>
-            {children}
-            <CategoryPanel />
-            <AccomplishmentPanel />
-            <CategoryDeleteDialog />
+      <body className="min-h-full bg-background text-foreground">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            <TooltipProvider>
+              {children}
+              <CategoryPanel />
+              <AccomplishmentPanel />
+              <CategoryDeleteDialog />
 
-            <Toaster />
-          </TooltipProvider>
-        </Providers>
+              <Toaster />
+            </TooltipProvider>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

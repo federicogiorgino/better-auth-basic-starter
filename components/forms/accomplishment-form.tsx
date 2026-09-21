@@ -5,14 +5,14 @@ import { CalendarIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import {
+  FormActions,
+  FormGrid,
+  FormShell,
+} from "@/components/forms/form-layout";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   Popover,
@@ -102,7 +102,7 @@ export function AccomplishmentForm({
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-      <FieldGroup>
+      <FormShell>
         <Controller
           name="title"
           control={form.control}
@@ -123,7 +123,7 @@ export function AccomplishmentForm({
           )}
         />
 
-        <div className="grid grid-cols-2 gap-3">
+        <FormGrid>
           <Controller
             name="date"
             control={form.control}
@@ -199,7 +199,7 @@ export function AccomplishmentForm({
               </Field>
             )}
           />
-        </div>
+        </FormGrid>
 
         <Controller
           name="impact"
@@ -262,18 +262,20 @@ export function AccomplishmentForm({
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isPending || !form.formState.isValid}
-        >
-          {isPending
-            ? "Saving..."
-            : isEditing
-              ? "Save changes"
-              : "Add accomplishment"}
-        </Button>
-      </FieldGroup>
+        <FormActions>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isPending || !form.formState.isValid}
+          >
+            {isPending
+              ? "Saving..."
+              : isEditing
+                ? "Save changes"
+                : "Add accomplishment"}
+          </Button>
+        </FormActions>
+      </FormShell>
     </form>
   );
 }

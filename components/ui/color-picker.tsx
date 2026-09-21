@@ -85,7 +85,7 @@ const ColorPicker = forwardRef<
             <div />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-64 space-y-3">
+        <PopoverContent className="flex w-64 flex-col gap-3">
           <div className="flex rounded-md border p-0.5 text-sm">
             <button
               type="button"
